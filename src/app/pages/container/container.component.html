@@ -1,0 +1,98 @@
+<button *ngIf="sidenav" id="toggle-sidenav-button" mat-icon-button [ngSwitch]="sidenav.opened" (click)="sidenav.toggle()">
+  <mat-icon *ngSwitchCase="true" matTooltip="Close side menu">close</mat-icon>
+  <mat-icon *ngSwitchCase="false" matTooltip="Open side menu">menu</mat-icon>
+</button>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over">
+    <mat-action-list role="list">
+      <ng-container *ngIf="role === 'guest'">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('start-page-guest')">
+          <mat-icon matListIcon>dashboard</mat-icon>
+          <h3 class="title" matLine>Початкова сторінка</h3>
+          <p class="subtitle" matLine>
+            <span>Загальна інформація</span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+      <ng-container *ngIf="role === 'user'">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('user-cabinet')">
+          <mat-icon matListIcon>account_box</mat-icon>
+          <h3 class="title" matLine>Особистий кабінет</h3>
+          <p class="subtitle" matLine>
+            <span>Можливість подати нову заяву та переглянути попередні</span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+      <ng-container *ngIf="role === 'expert'">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('expert-requests-list')">
+          <mat-icon matListIcon>assignment</mat-icon>
+          <h3 class="title" matLine>Мої заяви</h3>
+          <p class="subtitle" matLine>
+            <span>Список заяв від громадян</span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+      <mat-list-item role="listitem" (click)="changeShowedComponent('regular-values-list')">
+        <mat-icon matListIcon>category</mat-icon>
+        <h3 class="title" matLine>Реєстр культурних цінностей</h3>
+        <p class="subtitle" matLine>
+          <span>Інформація про будь-яку культурну цінність на території України</span>
+        </p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem" (click)="changeShowedComponent('moved-values-list')">
+        <mat-icon matListIcon>reply</mat-icon>
+        <h3 class="title" matLine>Реєстр переміщених культурних цінностей</h3>
+        <p class="subtitle" matLine>
+          <span>Інформація про будь-яку цінність української культури, вивезену за кордон</span>
+        </p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem" (click)="changeShowedComponent('missed-values-list')">
+        <mat-icon matListIcon>report</mat-icon>
+        <h3 class="title" matLine>Реєстр викрадених/зниклих культурних цінностей</h3>
+        <p class="subtitle" matLine>
+          <span>Інформація про втрачені культурні пам’ятки</span>
+        </p>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="['expert', 'other'].includes(role)">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('documents-general-list')">
+          <mat-icon matListIcon>description</mat-icon>
+          <h3 class="title" matLine>Реєстр виданих свідоцтв і висновків</h3>
+          <p class="subtitle" matLine>
+            <span>Перелік усіх виданих документів</span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+      <ng-container *ngIf="['expert', 'other'].includes(role)">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('documents-sharing')">
+          <mat-icon matListIcon>cached</mat-icon>
+          <h3 class="title" matLine>Обмін файлами</h3>
+          <p class="subtitle" matLine>
+            <span>Обмінюйтесь файлами між представниками інших державних структур</span>
+          </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-action-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-container [ngSwitch]="showedComponent">
+      <app-start-page-guest *ngSwitchCase="'start-page-guest'"></app-start-page-guest>
+      <app-regular-values-list *ngSwitchCase="'regular-values-list'"></app-regular-values-list>
+      <app-moved-values-list *ngSwitchCase="'moved-values-list'"></app-moved-values-list>
+      <app-missed-values-list *ngSwitchCase="'missed-values-list'"></app-missed-values-list>
+      <app-user-cabinet *ngSwitchCase="'user-cabinet'"></app-user-cabinet>
+      <app-expert-requests-list *ngSwitchCase="'expert-requests-list'"></app-expert-requests-list>
+      <app-documents-general-list *ngSwitchCase="'documents-general-list'"></app-documents-general-list>
+      <app-documents-sharing *ngSwitchCase="'documents-sharing'"></app-documents-sharing>
+      <app-start-page-other *ngSwitchCase="'start-page-other'"></app-start-page-other>
+    </ng-container>
+    {{ role }}
+  </mat-sidenav-content>
+</mat-sidenav-container>

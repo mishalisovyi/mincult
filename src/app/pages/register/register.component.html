@@ -1,0 +1,37 @@
+<form class="auth-form-container" [formGroup]="registerForm" (submit)="register()">
+  <mat-card>
+    <mat-card-title>
+      Реєстрація
+    </mat-card-title>
+    <mat-card-subtitle>
+      Будь ласка, введіть свої дані
+    </mat-card-subtitle>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <input matInput formControlName="email" type="email" placeholder="Електронна пошта">
+        <mat-error>Електронна пошта обов’язкова</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="password" (input)="validatePasswordConfirmation()" type="password" placeholder="Пароль">
+        <mat-error>Пароль обов’язковий</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="confirm_password" (input)="validatePasswordConfirmation()" type="password"
+          placeholder="Підтвердіть пароль">
+        <mat-error *ngIf="registerForm.get('confirm_password').hasError('required')">Підтвердіть пароль</mat-error>
+        <mat-error *ngIf="registerForm.get('confirm_password').hasError('notEqual')">Паролі не співпадають</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="first_name" type="text" placeholder="Ім’я">
+        <mat-error>Ім’я обов’язкове</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="last_name" type="text" placeholder="Прізвище">
+        <mat-error>Прізвище обов’язкове</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Реєстрація</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

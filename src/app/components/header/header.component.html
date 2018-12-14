@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button *ngIf="routing.canNavigateBack" mat-icon-button (click)="router.navigateByUrl(routing.navigateBackUrl)" id="back-button"
+      [@arrowBack]="routing.canNavigateBack">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div fxFlex></div>
+    <span>ЄДИНИЙ ДЕРЖАВНИЙ РЕЄСТР КУЛЬТУРНИХ ЦІННОСТЕЙ УКРАЇНИ</span>
+    <div fxFlex></div>
+    <ng-container *ngIf="authorizedUser">
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Вийти</span>
+        </button>
+      </mat-menu>
+      <button class="authorize-button" mat-button [matMenuTriggerFor]="profileMenu">
+        <span>{{ authorizedUser }}</span>
+      </button>
+    </ng-container>
+    <a *ngIf="router.url === '/guest'" class="authorize-button" mat-button routerLink="/login">
+      <span>Увійти </span>
+      <mat-icon>input</mat-icon>
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>

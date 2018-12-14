@@ -1,0 +1,26 @@
+<form class="auth-form-container" [formGroup]="loginForm" (submit)="login()">
+  <mat-card>
+    <mat-card-title>
+      Авторизація
+    </mat-card-title>
+    <mat-card-subtitle>
+      Будь ласка, введіть свої дані
+    </mat-card-subtitle>
+    <mat-card-content fxLayout="column">
+      <mat-form-field>
+        <input matInput placeholder="Електронна пошта" type="email" formControlName="email">
+        <mat-error>Електронна пошта обов’язкова</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Пароль" type="password" formControlName="password">
+        <mat-error>Пароль обов’язковий</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Увійти</button>
+      <button mat-stroked-button color="primary" (click)="navigateByUrl('/register')" type="button" style="margin-left: 5px">Реєстрація</button>
+      <div fxFlex></div>
+      <a mat-button routerLink="/forgot-password">Забули пароль?</a>
+    </mat-card-actions>
+  </mat-card>
+</form>
