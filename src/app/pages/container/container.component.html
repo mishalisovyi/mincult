@@ -59,7 +59,7 @@
         </p>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <ng-container *ngIf="['expert', 'other'].includes(role)">
+      <!-- <ng-container *ngIf="['expert', 'other'].includes(role)">
         <mat-list-item role="listitem" (click)="changeShowedComponent('documents-general-list')">
           <mat-icon matListIcon>description</mat-icon>
           <h3 class="title" matLine>Реєстр виданих свідоцтв і висновків</h3>
@@ -68,7 +68,7 @@
           </p>
         </mat-list-item>
         <mat-divider></mat-divider>
-      </ng-container>
+      </ng-container> -->
       <ng-container *ngIf="['expert', 'other'].includes(role)">
         <mat-list-item role="listitem" (click)="changeShowedComponent('documents-sharing')">
           <mat-icon matListIcon>cached</mat-icon>
@@ -83,16 +83,15 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <ng-container [ngSwitch]="showedComponent">
-      <app-start-page-guest *ngSwitchCase="'start-page-guest'"></app-start-page-guest>
+      <app-start-page-guest *ngSwitchCase="'start-page-guest'" (goToListEvent)="goToList($event)"></app-start-page-guest>
       <app-regular-values-list *ngSwitchCase="'regular-values-list'"></app-regular-values-list>
       <app-moved-values-list *ngSwitchCase="'moved-values-list'"></app-moved-values-list>
       <app-missed-values-list *ngSwitchCase="'missed-values-list'"></app-missed-values-list>
       <app-user-cabinet *ngSwitchCase="'user-cabinet'"></app-user-cabinet>
       <app-expert-requests-list *ngSwitchCase="'expert-requests-list'"></app-expert-requests-list>
-      <app-documents-general-list *ngSwitchCase="'documents-general-list'"></app-documents-general-list>
+      <!-- <app-documents-general-list *ngSwitchCase="'documents-general-list'"></app-documents-general-list> -->
       <app-documents-sharing *ngSwitchCase="'documents-sharing'"></app-documents-sharing>
       <app-start-page-other *ngSwitchCase="'start-page-other'"></app-start-page-other>
     </ng-container>
-    {{ role }}
   </mat-sidenav-content>
 </mat-sidenav-container>

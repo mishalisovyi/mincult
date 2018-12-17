@@ -45,4 +45,8 @@ export class ContainerComponent implements OnInit {
     this.showedComponent = showedComponent;
     this.sidenav.toggle();
   }
+
+  goToList(e: string) {
+    this.showedComponent = e;
+  }
 }

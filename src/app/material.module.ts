@@ -4,10 +4,14 @@ import {
   MatIconModule,
   MatCardModule,
   MatInputModule,
+  MatSelectModule,
   MatSnackBarModule,
   MatMenuModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule
 } from "@angular/material";
 
 export const MaterialModule = [
@@ -16,8 +20,12 @@ export const MaterialModule = [
   MatIconModule,
   MatCardModule,
   MatInputModule,
+  MatSelectModule,
   MatSnackBarModule,
   MatMenuModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule
 ];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-start-page-guest',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartPageGuestComponent implements OnInit {
 
+  @Output() goToListEvent = new EventEmitter<string>();
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  goToList(list: string) {
+    this.goToListEvent.emit(list);
+  }
 }

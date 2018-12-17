@@ -9,7 +9,7 @@
   <h1 class="mat-h2">На сайті доступна для перегляду така інформація:</h1>
 </div>
 <div style="height: 25px"></div>
-<div fxLayout fxLayoutAlign="space-around">
+<div fxLayout="row wrap" fxLayoutAlign="space-around">
   <mat-card>
     <mat-card-header fxLayoutAlign="center">
       <mat-card-title>Реєстр культурних цінностей</mat-card-title>
@@ -21,9 +21,8 @@
         переглянути таку інформацію про культурну цінність як дата створення, місце знаходження, короткий опис, фото.
       </p>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+    <mat-card-actions fxLayout fxLayoutAlign="center">
+      <button mat-raised-button color="primary" (click)="goToList('regular-values-list')">Переглянути</button>
     </mat-card-actions>
   </mat-card>
   <mat-card>
@@ -38,9 +37,8 @@
         переміщення і місце тимчасового знаходження цінності.
       </p>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+    <mat-card-actions fxLayout fxLayoutAlign="center">
+      <button mat-raised-button color="primary" (click)="goToList('moved-values-list')">Переглянути</button>
     </mat-card-actions>
   </mat-card>
   <mat-card>
@@ -54,9 +52,14 @@
         надається у реєстрі, відноситься час та місце зникнення/викрадення.
       </p>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+    <mat-card-actions fxLayout fxLayoutAlign="center">
+      <button mat-raised-button color="primary" (click)="goToList('missed-values-list')">Переглянути</button>
     </mat-card-actions>
   </mat-card>
+</div>
+<div style="height: 75px"></div>
+<div id="bottom-text-wrapper">
+  <h2 class="mat-h2">На даному сайті ви можете подати заявку на <span class="underline">внесення культурної цінності в
+      єдиний реєстр</span>, або на <span class="underline">вивезення за кордон</span></h2>
+  <h3 class="mat-h3">Для того щоб це зробити, вам потрібно <a id="login-link" routerLink="/login">авторизуватися</a></h3>
 </div>
