@@ -1,4 +1,4 @@
-<button *ngIf="sidenav" id="toggle-sidenav-button" mat-icon-button [ngSwitch]="sidenav.opened" (click)="sidenav.toggle()">
+<button style="z-index: 1000;" *ngIf="sidenav" id="toggle-sidenav-button" mat-icon-button [ngSwitch]="sidenav.opened" (click)="sidenav.toggle()">
   <mat-icon *ngSwitchCase="true" matTooltip="Close side menu">close</mat-icon>
   <mat-icon *ngSwitchCase="false" matTooltip="Open side menu">menu</mat-icon>
 </button>
@@ -6,7 +6,7 @@
   <mat-sidenav #sidenav mode="over">
     <mat-action-list role="list">
       <ng-container *ngIf="role === 'guest'">
-        <mat-list-item role="listitem" (click)="changeShowedComponent('start-page-guest')">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('start-page-guest', true)">
           <mat-icon matListIcon>dashboard</mat-icon>
           <h3 class="title" matLine>Початкова сторінка</h3>
           <p class="subtitle" matLine>
@@ -16,7 +16,7 @@
         <mat-divider></mat-divider>
       </ng-container>
       <ng-container *ngIf="role === 'user'">
-        <mat-list-item role="listitem" (click)="changeShowedComponent('user-cabinet')">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('user-cabinet', true)">
           <mat-icon matListIcon>account_box</mat-icon>
           <h3 class="title" matLine>Особистий кабінет</h3>
           <p class="subtitle" matLine>
@@ -26,7 +26,7 @@
         <mat-divider></mat-divider>
       </ng-container>
       <ng-container *ngIf="role === 'expert'">
-        <mat-list-item role="listitem" (click)="changeShowedComponent('expert-requests-list')">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('expert-requests-list', true)">
           <mat-icon matListIcon>assignment</mat-icon>
           <h3 class="title" matLine>Мої заяви</h3>
           <p class="subtitle" matLine>
@@ -35,7 +35,7 @@
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
-      <mat-list-item role="listitem" (click)="changeShowedComponent('regular-values-list')">
+      <mat-list-item role="listitem" (click)="changeShowedComponent('regular-values-list', true)">
         <mat-icon matListIcon>category</mat-icon>
         <h3 class="title" matLine>Реєстр культурних цінностей</h3>
         <p class="subtitle" matLine>
@@ -43,7 +43,7 @@
         </p>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item role="listitem" (click)="changeShowedComponent('moved-values-list')">
+      <mat-list-item role="listitem" (click)="changeShowedComponent('moved-values-list', true)">
         <mat-icon matListIcon>reply</mat-icon>
         <h3 class="title" matLine>Реєстр переміщених культурних цінностей</h3>
         <p class="subtitle" matLine>
@@ -51,7 +51,7 @@
         </p>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item role="listitem" (click)="changeShowedComponent('missed-values-list')">
+      <mat-list-item role="listitem" (click)="changeShowedComponent('missed-values-list', true)">
         <mat-icon matListIcon>report</mat-icon>
         <h3 class="title" matLine>Реєстр викрадених/зниклих культурних цінностей</h3>
         <p class="subtitle" matLine>
@@ -70,7 +70,7 @@
         <mat-divider></mat-divider>
       </ng-container> -->
       <ng-container *ngIf="['expert', 'other'].includes(role)">
-        <mat-list-item role="listitem" (click)="changeShowedComponent('documents-sharing')">
+        <mat-list-item role="listitem" (click)="changeShowedComponent('documents-sharing', true)">
           <mat-icon matListIcon>cached</mat-icon>
           <h3 class="title" matLine>Обмін файлами</h3>
           <p class="subtitle" matLine>
@@ -83,8 +83,8 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <ng-container [ngSwitch]="showedComponent">
-      <app-start-page-guest *ngSwitchCase="'start-page-guest'" (goToListEvent)="goToList($event)"></app-start-page-guest>
-      <app-regular-values-list *ngSwitchCase="'regular-values-list'"></app-regular-values-list>
+      <app-start-page-guest *ngSwitchCase="'start-page-guest'" (goToListEvent)="changeShowedComponent($event, false)"></app-start-page-guest>
+      <app-regular-values-list *ngSwitchCase="'regular-values-list'" (goToStartPageEvent)="changeShowedComponent($event, false)"></app-regular-values-list>
       <app-moved-values-list *ngSwitchCase="'moved-values-list'"></app-moved-values-list>
       <app-missed-values-list *ngSwitchCase="'missed-values-list'"></app-missed-values-list>
       <app-user-cabinet *ngSwitchCase="'user-cabinet'"></app-user-cabinet>

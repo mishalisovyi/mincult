@@ -11,7 +11,8 @@ import {
   MatListModule,
   MatTableModule,
   MatSortModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatProgressSpinnerModule
 } from "@angular/material";
 
 export const MaterialModule = [
@@ -27,5 +28,6 @@ export const MaterialModule = [
   MatListModule,
   MatTableModule,
   MatSortModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatProgressSpinnerModule
 ];

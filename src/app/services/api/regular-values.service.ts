@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Subject, BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, finalize, delay } from "rxjs/operators";
+import * as _ from "lodash";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
@@ -34,49 +36,33 @@ export class RegularValuesDataSource implements DataSource<any> {
     this.dataLengthSubject.complete();
   }
 
-  loadRegularValues() {
+  loadRegularValues(data: any) {
     this.loadingSubject.next(true);
     this.emptySubject.next(false);
 
-    of(["data"])
+    of(data)
       .pipe(
         delay(400),
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
       .subscribe((values: any) => {
-        values.length ? this.regularValueSubject.next([
-          { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-          { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-          { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-          { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-          { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-          { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-          { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-          { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-          { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-          { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-        ]) : this.emptySubject.next(false);
+        [values].length ? this.regularValueSubject.next((() => {
+          const data: any = [];
+          for (let i = 0; i < _.random(5, 20); ++i) {
+            data.push({
+              name: `name ${i + 1}`,
+              creator: `creator ${i + 1}`,
+              create_time: moment(),
+              create_place: `place ${i + 1}`,
+              material: `material ${i + 1}`,
+              technique: `technique ${i + 1}`,
+              size: `size ${i + 1}`,
+              keywords: `keywords ${i + 1}`
+            })
+          }
+          return data;
+        })()) : this.emptySubject.next(true);
       });
   }
-
-  // loadRegularValues(pagination: { page: number; page_size: number }, filters?: { key: string; value: string }[], ordering?: string[], searchQuery?: string) {
-  //   this.loadingSubject.next(true);
-  //   this.emptySubject.next(false);
-  //   this.regularValueService
-  //     .findOffers(pagination, filters, ordering, searchQuery)
-  //     .pipe(
-  //       catchError(() => of([])),
-  //       finalize(() => this.loadingSubject.next(false))
-  //     )
-  //     .subscribe((values: any) => {
-  //       this.regularValueSubject.next(values.content);
-  //       if (values.content) {
-  //         if (values.metadata.items_count) this.dataLengthSubject.next(values.metadata.items_count);
-  //         this.emptySubject.next(false);
-  //       } else {
-  //         this.emptySubject.next(true);
-  //       }
-  //     });
-  // }
 }

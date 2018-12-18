@@ -41,12 +41,8 @@ export class ContainerComponent implements OnInit {
     });
   }
 
-  changeShowedComponent(showedComponent: string) {
+  changeShowedComponent(showedComponent: string, toggleSidenav: boolean) {
     this.showedComponent = showedComponent;
-    this.sidenav.toggle();
-  }
-
-  goToList(e: string) {
-    this.showedComponent = e;
+    if (toggleSidenav) this.sidenav.toggle();
   }
 }

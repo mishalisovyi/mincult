@@ -56,4 +56,36 @@ export class ValuesFiltersDataService {
       { id: 2, title: "Орган 3" }
     ]).pipe(delay(200));
   }
+
+  public getCreationTimes() {
+    return of([
+      { id: 0, title: "XVI століття" },
+      { id: 1, title: "XVIII століття" },
+      { id: 2, title: "XX століття" }
+    ]).pipe(delay(200));
+  }
+
+  public getMaterials() {
+    return of([
+      { id: 0, title: "Мармур" },
+      { id: 1, title: "Дерево" },
+      { id: 2, title: "Олійні фарби" }
+    ]).pipe(delay(200));
+  }
+
+  public getTechniques() {
+    return of([
+      { id: 0, title: "Барельєф" },
+      { id: 1, title: "Різьба по дереву" },
+      { id: 2, title: "Графіка" }
+    ]).pipe(delay(200));
+  }
+
+  public getSizes() {
+    return of([
+      { id: 0, title: "Малий" },
+      { id: 1, title: "Середній" },
+      { id: 2, title: "Великий" }
+    ]).pipe(delay(200));
+  }
 }
