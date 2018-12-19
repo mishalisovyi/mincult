@@ -3,17 +3,18 @@ import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Subject, BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, finalize, delay } from "rxjs/operators";
 import * as _ from "lodash";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegularValuesService {
+export class MovedValuesService {
 
   constructor() { }
 }
 
-export class RegularValuesDataSource implements DataSource<any> {
-  private regularValueSubject = new BehaviorSubject<any>([]);
+export class MovedValuesDataSource implements DataSource<any> {
+  private movedValueSubject = new BehaviorSubject<any>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private emptySubject = new BehaviorSubject<boolean>(false);
   private dataLengthSubject = new Subject<number>();
@@ -22,22 +23,25 @@ export class RegularValuesDataSource implements DataSource<any> {
   public empty$ = this.emptySubject.asObservable();
   public length$ = this.dataLengthSubject.asObservable();
 
-  constructor(private regularValueService: RegularValuesService) { }
+  constructor(private movedValueService: MovedValuesService) { }
 
   connect(collectionViewer: CollectionViewer): Observable<any[]> {
-    return this.regularValueSubject.asObservable();
+    return this.movedValueSubject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.regularValueSubject.complete();
+    this.movedValueSubject.complete();
     this.loadingSubject.complete();
     this.emptySubject.complete();
     this.dataLengthSubject.complete();
   }
 
-  loadRegularValues(data: any, pagination: { page: number, page_size: number }, ordering?: string[]) {
+  loadMovedValues(data: any, pagination: { page: number, page_size: number }, ordering?: string[]) {
     this.loadingSubject.next(true);
     this.emptySubject.next(false);
+
+    data.move_time_from = new Date(data.move_time_from).toISOString();
+    data.move_time_to = new Date(data.move_time_to).toISOString();
 
     of(data)
       .pipe(
@@ -48,7 +52,7 @@ export class RegularValuesDataSource implements DataSource<any> {
       .subscribe((values: any) => {
         const length: number = _.random(5, 20);
         if ([values].length) {
-          this.regularValueSubject.next((() => {
+          this.movedValueSubject.next((() => {
             const data: any = [];
             for (let i = 0; i < length; ++i) {
               data.push({
@@ -56,6 +60,8 @@ export class RegularValuesDataSource implements DataSource<any> {
                 creator: `creator ${i + 1}`,
                 create_time: `time ${i + 1}`,
                 create_place: `place ${i + 1}`,
+                move_time: moment(),
+                move_type: new Array("inner", "outer")[_.random(0, 1)],
                 material: `material ${i + 1}`,
                 technique: `technique ${i + 1}`,
                 size: `size ${i + 1}`,

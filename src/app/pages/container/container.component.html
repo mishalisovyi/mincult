@@ -1,4 +1,5 @@
-<button style="z-index: 1000;" *ngIf="sidenav" id="toggle-sidenav-button" mat-icon-button [ngSwitch]="sidenav.opened" (click)="sidenav.toggle()">
+<button style="z-index: 1000;" *ngIf="sidenav" id="toggle-sidenav-button" mat-icon-button [ngSwitch]="sidenav.opened"
+  (click)="sidenav.toggle()">
   <mat-icon *ngSwitchCase="true" matTooltip="Close side menu">close</mat-icon>
   <mat-icon *ngSwitchCase="false" matTooltip="Open side menu">menu</mat-icon>
 </button>
@@ -85,7 +86,7 @@
     <ng-container [ngSwitch]="showedComponent">
       <app-start-page-guest *ngSwitchCase="'start-page-guest'" (goToListEvent)="changeShowedComponent($event, false)"></app-start-page-guest>
       <app-regular-values-list *ngSwitchCase="'regular-values-list'" (goToStartPageEvent)="changeShowedComponent($event, false)"></app-regular-values-list>
-      <app-moved-values-list *ngSwitchCase="'moved-values-list'"></app-moved-values-list>
+      <app-moved-values-list *ngSwitchCase="'moved-values-list'" (goToStartPageEvent)="changeShowedComponent($event, false)"></app-moved-values-list>
       <app-missed-values-list *ngSwitchCase="'missed-values-list'"></app-missed-values-list>
       <app-user-cabinet *ngSwitchCase="'user-cabinet'"></app-user-cabinet>
       <app-expert-requests-list *ngSwitchCase="'expert-requests-list'"></app-expert-requests-list>

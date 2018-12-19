@@ -1,6 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { of } from "rxjs";
+import { MatPaginator, MatSort } from "@angular/material";
+import { of, merge } from "rxjs";
+import { tap, debounceTime } from "rxjs/operators";
 import * as moment from "moment";
 import { RegularValuesService, RegularValuesDataSource } from "../../services/api/regular-values.service";
 import { ValuesFiltersDataService } from "../../services/api/values-filters-data.service";
@@ -8,9 +10,12 @@ import { ValuesFiltersDataService } from "../../services/api/values-filters-data
 @Component({
   selector: 'app-regular-values-list',
   templateUrl: './regular-values-list.component.html',
-  styleUrls: ['./regular-values-list.component.scss']
+  styleUrls: ['./regular-values-list.component.scss', '../shared.scss']
 })
-export class RegularValuesListComponent implements OnInit {
+export class RegularValuesListComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   @Output() goToStartPageEvent = new EventEmitter<string>();
 
@@ -21,7 +26,7 @@ export class RegularValuesListComponent implements OnInit {
 
   public years: number[];
   public displayedColumns: string[] = ['name', 'creator', 'create_time', 'create_place', 'material', 'technique', 'size', 'keywords'];
-  public firstLoading = false;
+  public firstLoadingPerformed = false;
 
   public monthes: any;
   public regions: any;
@@ -60,6 +65,15 @@ export class RegularValuesListComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        debounceTime(200),
+        tap(() => this.search(true))
+      )
+      .subscribe();
+  }
+
   public initForms() {
     this.criterionsForm = this.formBuilder.group({
       year: [moment().year(), Validators.required],
@@ -78,10 +92,13 @@ export class RegularValuesListComponent implements OnInit {
     });
   }
 
-  search() {
-    if (this.criterionsForm.valid) {
-      this.dataSource.loadRegularValues(this.criterionsForm.value);
-      this.firstLoading = true;
+  search(withoutValidation: boolean = false) {
+    if (this.criterionsForm.valid || withoutValidation) {
+      const ordering: string[] = [];
+      if (this.sort.active && this.sort.direction) ordering.push(`${this.sort.direction === "asc" ? "-" : ""}${this.sort.active}`);
+      const pagination = { page: this.paginator.pageIndex + 1, page_size: this.paginator.pageSize };
+      this.dataSource.loadRegularValues(this.criterionsForm.value, pagination, ordering);
+      this.firstLoadingPerformed = true;
     }
   }
 

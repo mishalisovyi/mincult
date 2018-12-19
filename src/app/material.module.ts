@@ -12,7 +12,9 @@ import {
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from "@angular/material";
 
 export const MaterialModule = [
@@ -29,5 +31,7 @@ export const MaterialModule = [
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
