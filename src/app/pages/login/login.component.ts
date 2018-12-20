@@ -38,10 +38,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService
         .login(this.loginForm.value as UserLoginRequest)
-        .pipe(switchMap((response: UserLoginResponse) => this.storage.set<UserLoginResponse>("authorization", response)))
+        // .pipe(switchMap((response: UserLoginResponse) => this.storage.set<UserLoginResponse>("authorization", response)))
+        .pipe(switchMap((response: UserLoginResponse) => this.storage.set<UserLoginResponse>("authorization", Object.assign({ name: "Олег", surname: "Петренко" }, response))))
         .subscribe(
           // (user) => { user.content.role === "user" ? this.router.navigateByUrl("/user") : this.router.navigateByUrl("/expert"); },
-          user =>  this.router.navigateByUrl(`/${user.content.role}`),
+          user => this.router.navigateByUrl(`/${user.content.role}`),
           e => { this.snackBar.open(e, "Close", { duration: 2000 }); }
         );
     }

@@ -88,4 +88,12 @@ export class ValuesFiltersDataService {
       { id: 2, title: "Великий" }
     ]).pipe(delay(200));
   }
+
+  public getMissingTimes() {
+    return of([
+      { id: 0, title: "Перша світова війна" },
+      { id: 1, title: "Друга світова війна" },
+      { id: 2, title: "XXI століття" },
+    ]).pipe(delay(200));
+  }
 }

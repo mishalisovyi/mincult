@@ -1,3 +1,206 @@
-<p>
-  missed-values-list works!
-</p>
+<mat-toolbar fxLayoutAlign="center center">
+  <span>Пошук по реєстру викрадених/зниклих культурних цінностей</span>
+  <button id="to-start-btn" mat-raised-button color="primary" (click)="goToStartPage('start-page-guest')">
+    <mat-icon matListIcon>home</mat-icon>
+    <span> На початок</span>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="criterionsForm" (submit)="search()">
+  <div fxLayout="row wrap" fxLayoutAlign="space-around">
+    <mat-card fxLayout="column" fxLayoutAlign="space-around">
+      <mat-card-header fxLayoutAlign="center">
+        <mat-card-title>Обов'язкові критерії пошуку</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout fxLayoutAlign="space-around">
+          <mat-form-field>
+            <mat-select formControlName="year" placeholder="Рік видачі">
+              <mat-option *ngFor="let year of years" [value]="year">
+                {{ year }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Рік обов’язковий</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="month" placeholder="Місяць видачі">
+              <mat-option *ngFor="let month of monthes" [value]="month.value">
+                {{ month.title }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Місяць обов’язковий</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="missing_type" placeholder="Тип відсутності">
+              <mat-option value="missed">Зниклий</mat-option>
+              <mat-option value="stolen">Викрадений</mat-option>
+              <mat-option value="all">Будь-який</mat-option>
+            </mat-select>
+            <mat-error>Тип обов’язковий</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout fxLayoutAlign="space-around">
+          <mat-form-field>
+            <mat-select formControlName="region" placeholder="Область видачі">
+              <mat-option *ngFor="let region of regions | async" [value]="region.id">
+                {{ region.title }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Область обов’язкова</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="city" placeholder="Місто видачі">
+              <mat-option *ngFor="let city of cities | async" [value]="city.id">
+                {{ city.title }}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="!criterionsForm.get('region').valid">Спочатку оберіть область</mat-hint>
+            <mat-error>Місто обов’язкове</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="unit" placeholder="Орган видачі">
+              <mat-option *ngFor="let unit of units | async" [value]="unit.id">
+                {{ unit.title }}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="!criterionsForm.get('city').valid">Спочатку оберіть місто</mat-hint>
+            <mat-error>Орган видачі обов’язковий</mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxLayout="column" fxLayoutAlign="space-between">
+      <mat-card-header fxLayoutAlign="center">
+        <mat-card-title>Додаткові критерії пошуку</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout fxLayoutAlign="space-around">
+          <mat-form-field>
+            <input matInput formControlName="keywords" placeholder="Ключові слова">
+            <mat-hint>Перелічуйте через пробіл</mat-hint>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="name" placeholder="Назва">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="creator" placeholder="Автор / виробник">
+          </mat-form-field>
+        </div>
+        <div fxLayout fxLayoutAlign="space-around">
+          <mat-form-field>
+            <mat-select formControlName="create_time" placeholder="Час створення">
+              <mat-option *ngFor="let time of createTimes | async" [value]="time.id">
+                {{ time.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="create_place" placeholder="Місце створення">
+          </mat-form-field>
+        </div>
+        <div fxLayout fxLayoutAlign="space-around">
+          <mat-form-field>
+            <mat-select formControlName="material" placeholder="Матеріал">
+              <mat-option *ngFor="let material of materials | async" [value]="material.id">
+                {{ material.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="technique" placeholder="Техніка">
+              <mat-option *ngFor="let technique of techniques | async" [value]="technique.id">
+                {{ technique.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select formControlName="size" placeholder="Розмір">
+              <mat-option *ngFor="let size of sizes | async" [value]="size.id">
+                {{ size.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout fxLayoutAlign="space-around">
+          <mat-form-field>
+            <mat-select formControlName="missing_time" placeholder="Час зникнення/викрадення">
+              <mat-option *ngFor="let time of missingTimes | async" [value]="time.id">
+                {{ time.title }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Час зникнення/викрадення обов’язковий</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="missing_place" placeholder="Введіть місце зникнення/викрадення">
+            <mat-error>Місце зникнення/викрадення обов’язкове</mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxLayout fxLayoutAlign="center">
+    <button id="search-btn" mat-raised-button color="primary" type="submit">Пошук</button>
+  </div>
+</form>
+
+<div id="spinner-container" *ngIf="dataSource.loading$ | async" fxLayout fxLayoutAlign="center">
+  <div>
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<div id="no-data-message" *ngIf="dataSource.empty$ | async" fxLayout fxLayoutAlign="center center">
+  <span class="mat-display-1">За запитом нічого не знайдено</span>
+</div>
+<div id="table-container" [hidden]="(dataSource.loading$ | async) || (dataSource.empty$ | async) || !firstLoadingPerformed">
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва елементу </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="creator">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Автор/виробник </th>
+      <td mat-cell *matCellDef="let element"> {{element.creator}} </td>
+    </ng-container>
+    <ng-container matColumnDef="create_time">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Час створення </th>
+      <td mat-cell *matCellDef="let element"> {{element.create_time}} </td>
+    </ng-container>
+    <ng-container matColumnDef="create_place">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Місце створення </th>
+      <td mat-cell *matCellDef="let element"> {{element.create_place}} </td>
+    </ng-container>
+    <ng-container matColumnDef="missing_type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип відсутності </th>
+      <td mat-cell *matCellDef="let element"> {{element.missing_type}} </td>
+    </ng-container>
+    <ng-container matColumnDef="missing_time">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Час викрадення/зникнення </th>
+      <td mat-cell *matCellDef="let element"> {{element.missing_time}} </td>
+    </ng-container>
+    <ng-container matColumnDef="missing_place">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Місце викрадення/зникнення </th>
+      <td mat-cell *matCellDef="let element"> {{element.missing_place}} </td>
+    </ng-container>
+    <ng-container matColumnDef="material">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Матеріал </th>
+      <td mat-cell *matCellDef="let element"> {{element.material}} </td>
+    </ng-container>
+    <ng-container matColumnDef="technique">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Техніка </th>
+      <td mat-cell *matCellDef="let element"> {{element.technique}} </td>
+    </ng-container>
+    <ng-container matColumnDef="size">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Розмір </th>
+      <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+    </ng-container>
+    <ng-container matColumnDef="keywords">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ключові слова </th>
+      <td mat-cell *matCellDef="let element"> {{element.keywords}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator pageSize="20" showFirstLastButtons [length]="dataSource.length$ | async" [pageSizeOptions]="[5, 10, 20, 50]"></mat-paginator>
+</div>

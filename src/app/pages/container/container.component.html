@@ -87,7 +87,7 @@
       <app-start-page-guest *ngSwitchCase="'start-page-guest'" (goToListEvent)="changeShowedComponent($event, false)"></app-start-page-guest>
       <app-regular-values-list *ngSwitchCase="'regular-values-list'" (goToStartPageEvent)="changeShowedComponent($event, false)"></app-regular-values-list>
       <app-moved-values-list *ngSwitchCase="'moved-values-list'" (goToStartPageEvent)="changeShowedComponent($event, false)"></app-moved-values-list>
-      <app-missed-values-list *ngSwitchCase="'missed-values-list'"></app-missed-values-list>
+      <app-missed-values-list *ngSwitchCase="'missed-values-list'" (goToStartPageEvent)="changeShowedComponent($event, false)"></app-missed-values-list>
       <app-user-cabinet *ngSwitchCase="'user-cabinet'"></app-user-cabinet>
       <app-expert-requests-list *ngSwitchCase="'expert-requests-list'"></app-expert-requests-list>
       <!-- <app-documents-general-list *ngSwitchCase="'documents-general-list'"></app-documents-general-list> -->

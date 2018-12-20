@@ -15,7 +15,7 @@
       <mat-card-content>
         <div fxLayout fxLayoutAlign="space-around">
           <mat-form-field>
-            <mat-select formControlName="year" placeholder="Оберіть рік">
+            <mat-select formControlName="year" placeholder="Рік видачі">
               <mat-option *ngFor="let year of years" [value]="year">
                 {{ year }}
               </mat-option>
@@ -23,7 +23,7 @@
             <mat-error>Рік обов’язковий</mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-select formControlName="month" placeholder="Оберіть місяць">
+            <mat-select formControlName="month" placeholder="Місяць видачі">
               <mat-option *ngFor="let month of monthes" [value]="month.value">
                 {{ month.title }}
               </mat-option>
@@ -33,7 +33,7 @@
         </div>
         <div fxLayout fxLayoutAlign="space-around">
           <mat-form-field>
-            <mat-select formControlName="region" placeholder="Оберіть область">
+            <mat-select formControlName="region" placeholder="Область видачі">
               <mat-option *ngFor="let region of regions | async" [value]="region.id">
                 {{ region.title }}
               </mat-option>
@@ -41,7 +41,7 @@
             <mat-error>Область обов’язкова</mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-select formControlName="city" placeholder="Оберіть місто">
+            <mat-select formControlName="city" placeholder="Місто видачі">
               <mat-option *ngFor="let city of cities | async" [value]="city.id">
                 {{ city.title }}
               </mat-option>
@@ -50,7 +50,7 @@
             <mat-error>Місто обов’язкове</mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-select formControlName="unit" placeholder="Оберіть орган видачі">
+            <mat-select formControlName="unit" placeholder="Орган видачі">
               <mat-option *ngFor="let unit of units | async" [value]="unit.id">
                 {{ unit.title }}
               </mat-option>

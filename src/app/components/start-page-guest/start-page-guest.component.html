@@ -10,7 +10,7 @@
 </div>
 <div style="height: 25px"></div>
 <div fxLayout="row wrap" fxLayoutAlign="space-around">
-  <mat-card>
+  <mat-card fxLayout="column" fxLayoutAlign="space-between">
     <mat-card-header fxLayoutAlign="center">
       <mat-card-title>Реєстр культурних цінностей</mat-card-title>
     </mat-card-header>
@@ -25,7 +25,7 @@
       <button mat-raised-button color="primary" (click)="goToList('regular-values-list')">Переглянути</button>
     </mat-card-actions>
   </mat-card>
-  <mat-card>
+  <mat-card fxLayout="column" fxLayoutAlign="space-between">
     <mat-card-header fxLayoutAlign="center">
       <mat-card-title>Реєстр переміщених культурних цінностей</mat-card-title>
     </mat-card-header>
@@ -41,7 +41,7 @@
       <button mat-raised-button color="primary" (click)="goToList('moved-values-list')">Переглянути</button>
     </mat-card-actions>
   </mat-card>
-  <mat-card>
+  <mat-card fxLayout="column" fxLayoutAlign="space-between">
     <mat-card-header fxLayoutAlign="center">
       <mat-card-title>Реєстр викрадених/зниклих культурних цінностей</mat-card-title>
     </mat-card-header>
