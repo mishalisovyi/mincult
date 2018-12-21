@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LocalStorageService } from "../../services/local-storage.service";
 import { RoutingStateService } from "../../services/routing-state.service";
-import { UserLoginResponse } from "../../models/User";
+import { User } from "../../models/User";
 
 @Component({
   selector: 'app-container',
@@ -20,8 +20,8 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit() {
     this.routing.navigateBackUrl = "";
-    this.storage.get<UserLoginResponse>("authorization").subscribe(item => {
-      item ? this.role = item.content.role : this.role = "guest";
+    this.storage.get<User>("authorization").subscribe(item => {
+      item ? this.role = item.role : this.role = "guest";
       switch (this.role) {
         case "guest":
           this.showedComponent = "start-page-guest";

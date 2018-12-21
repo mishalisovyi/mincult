@@ -31,12 +31,12 @@
             <mat-error>Місяць обов’язковий</mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-select formControlName="missing_type" placeholder="Тип відсутності">
+            <mat-select formControlName="missing_type" placeholder="Причина відсутності">
               <mat-option value="missed">Зниклий</mat-option>
               <mat-option value="stolen">Викрадений</mat-option>
               <mat-option value="all">Будь-який</mat-option>
             </mat-select>
-            <mat-error>Тип обов’язковий</mat-error>
+            <mat-error>Причина обов’язкова</mat-error>
           </mat-form-field>
         </div>
         <div fxLayout fxLayoutAlign="space-around">
@@ -172,7 +172,7 @@
       <td mat-cell *matCellDef="let element"> {{element.create_place}} </td>
     </ng-container>
     <ng-container matColumnDef="missing_type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип відсутності </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Причина відсутності </th>
       <td mat-cell *matCellDef="let element"> {{element.missing_type}} </td>
     </ng-container>
     <ng-container matColumnDef="missing_time">

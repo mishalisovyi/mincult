@@ -119,5 +119,4 @@ export class MissedValuesListComponent implements OnInit, AfterViewInit {
   goToStartPage(emittedValue: string) {
     this.goToStartPageEvent.emit(emittedValue);
   }
-
 }

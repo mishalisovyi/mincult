@@ -6,7 +6,7 @@ import { switchMap } from "rxjs/operators";
 import { AuthService } from "../../services/api/auth.service";
 import { LocalStorageService } from "../../services/local-storage.service";
 import { RoutingStateService } from "../../services/routing-state.service";
-import { UserLoginRequest, UserLoginResponse } from "../../models/User";
+import { UserLoginRequest, UserLoginResponse, User } from "../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -39,10 +39,15 @@ export class LoginComponent implements OnInit {
       this.authService
         .login(this.loginForm.value as UserLoginRequest)
         // .pipe(switchMap((response: UserLoginResponse) => this.storage.set<UserLoginResponse>("authorization", response)))
-        .pipe(switchMap((response: UserLoginResponse) => this.storage.set<UserLoginResponse>("authorization", Object.assign({ name: "Олег", surname: "Петренко" }, response))))
+        .pipe(switchMap((response: UserLoginResponse) => {
+          const tmp = Object.assign({}, response);
+          tmp.content.name = "Олег";
+          tmp.content.surname = "Петренко";
+          return this.storage.set<User>("authorization", tmp.content)
+        }))
         .subscribe(
           // (user) => { user.content.role === "user" ? this.router.navigateByUrl("/user") : this.router.navigateByUrl("/expert"); },
-          user => this.router.navigateByUrl(`/${user.content.role}`),
+          user => this.router.navigateByUrl(`/${user.role}`),
           e => { this.snackBar.open(e, "Close", { duration: 2000 }); }
         );
     }

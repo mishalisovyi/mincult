@@ -23,7 +23,7 @@ export class AuthService {
   public login(data: UserLoginRequest): Observable<UserLoginResponse> {
     // return this.http.post<UserLoginResponse>(`${environment.api}/login`, data);
     const roles: string[] = ["user", "expert", "other"];
-    return of({ content: { id: 0, token: "some_token", email: "aaa@gmail.com", role: roles[_.random(0, 2)] } }).pipe(delay(300));
+    return of({ content: { id: 0, token: "some_token", email: "aaa@gmail.com", role: roles[_.random(0, 2)], name: "Олег", surname: "Петренко" } }).pipe(delay(300));
   }
 
   public logout(): Observable<UserLogoutResponse> {

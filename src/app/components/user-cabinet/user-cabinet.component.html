@@ -1,3 +1,58 @@
-<p>
-  user-cabinet works!
-</p>
+<div style="height: 100px"></div>
+<div fxLayout fxLayoutAlign="center">
+  <span class="mat-display-1 text-center">Шановний {{ user.name }} {{user.surname}}, ви знаходитесь у особистому
+    кабінеті системи</span>
+</div>
+<div fxLayout="column">
+  <h1 class="mat-h1 text-center">Тут ви можете подати заявки на внесення культурної цінності в єдиний реєстр і на
+    вивезення культурної цінності за кордон</h1>
+  <h2 class="mat-h2 text-center">Також ви можете переглянути список поданих вами заяв</h2>
+</div>
+
+<div style="height: 75px"></div>
+
+<div fxLayout fxLayoutAlign="space-around">
+  <button mat-stroked-button color="primary">Подати заяву на проведення експертизи культурної цінності</button>
+  <button mat-stroked-button color="primary">Подати заяву на вивезення культурної цінності за кордон</button>
+</div>
+
+<div style="height: 75px"></div>
+
+<div fxLayout fxLayoutAlign="center">
+  <h1 class="mat-h1 text-center">Список ваших заяв</h1>
+</div>
+<div id="spinner-container" *ngIf="dataSource.loading$ | async" fxLayout fxLayoutAlign="center">
+  <div>
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<div id="no-data-message" *ngIf="dataSource.empty$ | async" fxLayout fxLayoutAlign="center center">
+  <span class="mat-display-1">За запитом нічого не знайдено</span>
+</div>
+<div id="table-container" [hidden]="(dataSource.loading$ | async) || (dataSource.empty$ | async) || !firstLoadingPerformed">
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип заяви </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва культурної цінності </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата подання </th>
+      <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="expert">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Експерт </th>
+      <td mat-cell *matCellDef="let element"> {{element.expert}} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Статус заяви </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator pageSize="10" showFirstLastButtons [length]="dataSource.length$ | async" [pageSizeOptions]="[5, 10, 20, 50]"></mat-paginator>
+</div>

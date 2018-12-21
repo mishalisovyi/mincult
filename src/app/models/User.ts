@@ -1,3 +1,15 @@
+/* View Models */
+
+export interface User {
+  id: number;
+  token: string;
+  email: string;
+  role: string;
+  name: string;
+  surname: string;
+}
+
+
 /* Request View Models */
 
 export interface UserLoginRequest {
@@ -24,12 +36,7 @@ export interface UserRegisterResponse {
 }
 
 export interface UserLoginResponse {
-  content: {
-    id: number;
-    token: string;
-    email: string;
-    role: string;
-  }
+  content: User
 }
 
 export interface UserLogoutResponse {

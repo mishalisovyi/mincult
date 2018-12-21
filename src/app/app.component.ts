@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from "rxjs/operators";
 import { LocalStorageService } from './services/local-storage.service';
-import { UserLoginResponse } from './models/User';
+import { User } from './models/User';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.pipe(filter(item => item instanceof NavigationEnd)).subscribe((item: NavigationEnd) => {
-      if (["/user", "/expert", "/other"].includes(item.url)) this.storage.get<UserLoginResponse>("authorization").subscribe(res => this.authorizedUser = res.content.email);
+      if (["/user", "/expert", "/other"].includes(item.url)) this.storage.get<User>("authorization").subscribe(res => this.authorizedUser = res.email);
       else this.authorizedUser = "";
     });
   }
