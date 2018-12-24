@@ -96,4 +96,16 @@ export class ValuesFiltersDataService {
       { id: 2, title: "XXI століття" },
     ]).pipe(delay(200));
   }
+
+  public getExperts() {
+    return of([
+      { id: 0, title: "Експерт 1" },
+      { id: 1, title: "Експерт 2" },
+      { id: 2, title: "Експерт 3" },
+      { id: 3, title: "Експерт 4" },
+      { id: 4, title: "Експерт 5" },
+      { id: 5, title: "Експерт 6" },
+      { id: 6, title: "Експерт 7" },
+    ]).pipe(delay(200));
+  }
 }

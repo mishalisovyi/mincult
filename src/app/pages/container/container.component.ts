@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LocalStorageService } from "../../services/local-storage.service";
 import { RoutingStateService } from "../../services/routing-state.service";
@@ -12,6 +12,16 @@ import { User } from "../../models/User";
 export class ContainerComponent implements OnInit {
 
   @ViewChild("sidenav") sidenav: MatSidenav;
+
+  @HostListener("wheel", ["$event"]) disableWheelScroll($event: Event) {
+    if (this.sidenav.opened) $event.preventDefault();
+  }
+  @HostListener("touchmove", ["$event"]) disableMobileScroll($event: Event) {
+    if (this.sidenav.opened) $event.preventDefault();
+  }
+  @HostListener("keydown", ["$event"]) disableKeydownScroll($event: Event) {
+    if (this.sidenav.opened) $event.preventDefault();
+  }
 
   public role: string = "guest";
   public showedComponent: string = "start-page-guest";

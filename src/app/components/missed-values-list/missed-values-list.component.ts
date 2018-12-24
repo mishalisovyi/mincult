@@ -6,6 +6,8 @@ import { tap, debounceTime } from "rxjs/operators";
 import * as moment from "moment";
 import { MissedValuesService, MissedValuesDataSource } from "../../services/api/missed-values.service";
 import { ValuesFiltersDataService } from "../../services/api/values-filters-data.service";
+import { LocalStorageService } from "../../services/local-storage.service";
+import { User } from "../../models/User";
 
 @Component({
   selector: 'app-missed-values-list',
@@ -25,8 +27,10 @@ export class MissedValuesListComponent implements OnInit, AfterViewInit {
   public additionalCriterionsForm: FormGroup;
 
   public years: number[];
-  public displayedColumns: string[] = ['name', 'creator', 'create_time', 'create_place', 'missing_type', 'missing_time', 'missing_place', 'material', 'technique', 'size', 'keywords'];
   public firstLoadingPerformed = false;
+
+  public startPageRoute: string;
+  public displayedColumns: string[] = ['name', 'creator', 'create_time', 'create_place', 'missing_type', 'missing_time', 'missing_place', 'material', 'technique', 'size', 'keywords'];
 
   public monthes: any;
   public regions: any;
@@ -38,11 +42,12 @@ export class MissedValuesListComponent implements OnInit, AfterViewInit {
   public sizes: any;
   public missingTimes: any;
 
-  constructor(public formBuilder: FormBuilder, public values: MissedValuesService, public filtersData: ValuesFiltersDataService) { }
+  constructor(public formBuilder: FormBuilder, public values: MissedValuesService, public filtersData: ValuesFiltersDataService, public storage: LocalStorageService) { }
 
   ngOnInit() {
     this.dataSource = new MissedValuesDataSource(this.values);
     this.initForms();
+    this.getStartPageRoute();
     this.years = this.filtersData.getYears();
     this.monthes = this.filtersData.getMonthes();
     this.regions = this.filtersData.getRegions();
@@ -106,6 +111,28 @@ export class MissedValuesListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  public getStartPageRoute() {
+    this.storage.get<User>("authorization").subscribe(user => {
+      if (!user) this.startPageRoute = "start-page-guest";
+      else {
+        const role = user.role;
+        switch (role) {
+          case "user":
+            this.startPageRoute = "user-cabinet";
+            break;
+          case "expert":
+            this.startPageRoute = "expert-requests-list";
+            break;
+          case "other":
+            this.startPageRoute = "start-page-other";
+            break;
+          default:
+            break;
+        };
+      };
+    });
+  }
+
   search(withoutValidation: boolean = false) {
     if (this.criterionsForm.valid || withoutValidation) {
       const ordering: string[] = [];
@@ -116,7 +143,7 @@ export class MissedValuesListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  goToStartPage(emittedValue: string) {
-    this.goToStartPageEvent.emit(emittedValue);
+  goToStartPage() {
+    this.goToStartPageEvent.emit(this.startPageRoute);
   }
 }

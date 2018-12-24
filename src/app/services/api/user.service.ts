@@ -41,7 +41,7 @@ export class UserDataSource implements DataSource<any> {
 
     of("data")
       .pipe(
-        delay(4000),
+        delay(1000),
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
@@ -52,9 +52,16 @@ export class UserDataSource implements DataSource<any> {
             const data: any = [];
             for (let i = 0; i < length; ++i) {
               data.push({
-                type: new Array("Проведення експертизи", "Вивезення за кордон")[_.random(0, 1)],
+                type: new Array(
+                  { value: "regular", title: "Проведення експертизи" },
+                  { value: "moved", title: "Вивезення за кордон" }
+                )[_.random(0, 1)],
                 date: moment(),
-                status: new Array("Підтверджено", "Відхилено", "Очікується")[_.random(0, 2)],
+                status: new Array(
+                  { value: "pending", title: "Очікується" },
+                  { value: "accepted", title: "Підтверджено" },
+                  { value: "declined", title: "Відхилено" },
+                )[_.random(0, 2)],
                 expert: `Експерт ${i + 1}`,
                 name: `Цінність ${i + 1}`,
               })

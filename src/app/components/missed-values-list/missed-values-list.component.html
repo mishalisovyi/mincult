@@ -1,6 +1,6 @@
 <mat-toolbar fxLayoutAlign="center center">
   <span>Пошук по реєстру викрадених/зниклих культурних цінностей</span>
-  <button id="to-start-btn" mat-raised-button color="primary" (click)="goToStartPage('start-page-guest')">
+  <button id="to-start-btn" mat-raised-button color="primary" (click)="goToStartPage()">
     <mat-icon matListIcon>home</mat-icon>
     <span> На початок</span>
   </button>
@@ -150,10 +150,10 @@
     <mat-spinner></mat-spinner>
   </div>
 </div>
-<div id="no-data-message" *ngIf="dataSource.empty$ | async" fxLayout fxLayoutAlign="center center">
+<div id="no-data-message" *ngIf="!(dataSource.loading$ | async) && (dataSource.empty$ | async)" fxLayout fxLayoutAlign="center center">
   <span class="mat-display-1">За запитом нічого не знайдено</span>
 </div>
-<div id="table-container" [hidden]="(dataSource.loading$ | async) || (dataSource.empty$ | async) || !firstLoadingPerformed">
+<div id="table-container" [class.hidden]="(dataSource.loading$ | async) || (dataSource.empty$ | async) || !firstLoadingPerformed">
   <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва елементу </th>
