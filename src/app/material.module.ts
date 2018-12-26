@@ -15,7 +15,7 @@ import {
   MatProgressSpinnerModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatDialogModule
+  MatDialogModule,
 } from "@angular/material";
 
 export const MaterialModule = [

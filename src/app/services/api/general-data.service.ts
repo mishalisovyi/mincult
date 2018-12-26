@@ -6,7 +6,7 @@ import * as moment from "moment";
 @Injectable({
   providedIn: 'root'
 })
-export class ValuesFiltersDataService {
+export class GeneralDataService {
 
   constructor() { }
 
@@ -38,6 +38,14 @@ export class ValuesFiltersDataService {
       { id: 0, title: "Вінницька" },
       { id: 1, title: "Київська" },
       { id: 2, title: "Львівська" }
+    ]).pipe(delay(200));
+  }
+
+  public getCategories() {
+    return of([
+      { id: 0, title: "Предмети образотворчого мистецтва" },
+      { id: 1, title: "Предмети декоративно-ужиткового мистецтва" },
+      { id: 2, title: "Меморіальні пам'ятки" }
     ]).pipe(delay(200));
   }
 

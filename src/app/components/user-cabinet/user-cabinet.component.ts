@@ -5,7 +5,7 @@ import { merge } from "rxjs";
 import { CreateRegularRequestComponent } from "./create-regular-request/create-regular-request.component";
 import { CreateMoveRequestComponent } from "./create-move-request/create-move-request.component";
 import { UserService, UserDataSource } from "../../services/api/user.service";
-import { ValuesFiltersDataService } from "../../services/api/values-filters-data.service"
+import { GeneralDataService } from "../../services/api/general-data.service"
 import { LocalStorageService } from "../../services/local-storage.service";
 import { User } from "../../models/User";
 
@@ -29,13 +29,13 @@ export class UserCabinetComponent implements OnInit, AfterViewInit {
   public experts: any;
   public displayedColumns: string[] = ['type', 'name', 'date', 'expert', 'status', 'view_request', 'view_response'];
 
-  constructor(public dialog: MatDialog, public userService: UserService, public storage: LocalStorageService, public filters: ValuesFiltersDataService) { }
+  constructor(public dialog: MatDialog, public userService: UserService, public storage: LocalStorageService, public generalData: GeneralDataService) { }
 
   ngOnInit() {
     this.initControls();
     this.dataSource = new UserDataSource(this.userService);
     this.storage.get<User>("authorization").subscribe((user: User) => this.user = user);
-    this.experts = this.filters.getExperts();
+    this.experts = this.generalData.getExperts();
     this.getRequestsList();
   }
 
@@ -68,20 +68,14 @@ export class UserCabinetComponent implements OnInit, AfterViewInit {
   }
 
   openRegularRequestDialog() {
-    const dialogRef = this.dialog.open(CreateRegularRequestComponent, {
-      width: "50%"
-    });
-    dialogRef.afterClosed().subscribe(res => {
-      console.log('The dialog was closed');
+    this.dialog.open(CreateRegularRequestComponent, {
+      width: "30%"
     });
   }
 
   openMoveRequestDialog() {
-    const dialogRef = this.dialog.open(CreateMoveRequestComponent, {
+    this.dialog.open(CreateMoveRequestComponent, {
       width: "50%"
-    });
-    dialogRef.afterClosed().subscribe(res => {
-      console.log('The dialog was closed');
     });
   }
 }

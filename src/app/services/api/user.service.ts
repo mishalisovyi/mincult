@@ -10,6 +10,10 @@ import * as moment from "moment";
 })
 export class UserService {
   constructor() { }
+
+  public createRegularRequest() {
+    return of("success").pipe(delay(300));
+  }
 }
 
 export class UserDataSource implements DataSource<any> {

@@ -5,7 +5,7 @@ import { of, merge } from "rxjs";
 import { tap, debounceTime } from "rxjs/operators";
 import * as moment from "moment";
 import { RegularValuesService, RegularValuesDataSource } from "../../services/api/regular-values.service";
-import { ValuesFiltersDataService } from "../../services/api/values-filters-data.service";
+import { GeneralDataService } from "../../services/api/general-data.service";
 import { LocalStorageService } from "../../services/local-storage.service";
 import { User } from "../../models/User";
 
@@ -41,32 +41,32 @@ export class RegularValuesListComponent implements OnInit, AfterViewInit {
   public techniques: any;
   public sizes: any;
 
-  constructor(public formBuilder: FormBuilder, public values: RegularValuesService, public filtersData: ValuesFiltersDataService, public storage: LocalStorageService) { }
+  constructor(public formBuilder: FormBuilder, public values: RegularValuesService, public generalData: GeneralDataService, public storage: LocalStorageService) { }
 
   ngOnInit() {
     this.dataSource = new RegularValuesDataSource(this.values);
     this.initForms();
     this.getStartPageRoute();
-    this.years = this.filtersData.getYears();
-    this.monthes = this.filtersData.getMonthes();
-    this.regions = this.filtersData.getRegions();
-    this.createTimes = this.filtersData.getCreationTimes();
-    this.materials = this.filtersData.getMaterials();
-    this.techniques = this.filtersData.getTechniques();
-    this.sizes = this.filtersData.getSizes();
+    this.years = this.generalData.getYears();
+    this.monthes = this.generalData.getMonthes();
+    this.regions = this.generalData.getRegions();
+    this.createTimes = this.generalData.getCreationTimes();
+    this.materials = this.generalData.getMaterials();
+    this.techniques = this.generalData.getTechniques();
+    this.sizes = this.generalData.getSizes();
 
     this.criterionsForm.get("region").valueChanges.subscribe(() => {
       this.criterionsForm.get("city").setValue(null);
       this.criterionsForm.get("city").markAsUntouched();
       this.criterionsForm.get("unit").setValue(null);
       this.criterionsForm.get("unit").markAsUntouched();
-      this.cities = this.filtersData.getCities(this.criterionsForm.get("region").value);
+      this.cities = this.generalData.getCities(this.criterionsForm.get("region").value);
       this.units = of([]);
     });
     this.criterionsForm.get("city").valueChanges.subscribe(() => {
       this.criterionsForm.get("unit").setValue(null);
       this.criterionsForm.get("unit").markAsUntouched();
-      this.units = this.filtersData.getUnits(this.criterionsForm.get("city").value);
+      this.units = this.generalData.getUnits(this.criterionsForm.get("city").value);
     });
   }
 
