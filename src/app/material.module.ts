@@ -16,6 +16,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatDialogModule,
+  MatTabsModule
 } from "@angular/material";
 
 export const MaterialModule = [
@@ -35,5 +36,6 @@ export const MaterialModule = [
   MatProgressSpinnerModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTabsModule
 ];

@@ -1,56 +1,71 @@
 <form [formGroup]="createRequestForm" (submit)="createRequest()">
   <h1 class="text-center" mat-dialog-title>Створення заяви на проведення експертизи культурної цінності</h1>
-  <div mat-dialog-content fxLayout="column">
-    <mat-form-field>
-      <input matInput formControlName="name" type="text" placeholder="Ім'я (для фіз. осіб) або найменування (для юр. осіб)">
-      <mat-error>Ім'я або найменування обов’язкове</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput formControlName="address" type="text" placeholder="Адреса">
-      <mat-error>Адреса обов’язкова</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput formControlName="phone" type="text" placeholder="Телефон">
-      <mat-error *ngIf="createRequestForm.get('phone').hasError('required')">Телефон обов’язковий</mat-error>
-      <mat-error *ngIf="createRequestForm.get('phone').hasError('pattern')">Дозволяються лише цифри та символ +</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput formControlName="email" type="email" placeholder="Email">
-      <mat-error *ngIf="createRequestForm.get('email').hasError('required')">Email обов’язковий</mat-error>
-      <mat-error *ngIf="createRequestForm.get('email').hasError('email')">Введіть коректний email</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput formControlName="passport" type="text" placeholder="Паспортні дані / номер ЄДРПУО">
-      <mat-error *ngIf="createRequestForm.get('passport').hasError('required')">Паспортні дані обов’язкові</mat-error>
-      <mat-error *ngIf="createRequestForm.get('passport').hasError('pattern')">Дозволяються лише цифри</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName="region" placeholder="Область перебування цінності">
-        <mat-option *ngFor="let region of regions | async" [value]="region.id">{{ region.title }}</mat-option>
-      </mat-select>
-      <mat-error>Область обов’язкова</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName="category" placeholder="Категорія цінності">
-        <mat-option *ngFor="let category of categories | async" [value]="category.id">{{ category.title }}</mat-option>
-      </mat-select>
-      <mat-error>Категорія обов’язкова</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select formControlName="expert" placeholder="Експерт">
-        <mat-option *ngFor="let expert of experts | async" [value]="expert.id">{{ expert.title }}</mat-option>
-      </mat-select>
-      <mat-hint *ngIf="createRequestForm.get('region').invalid || createRequestForm.get('category').invalid">
-        Спочатку оберіть область і категорію
-      </mat-hint>
-      <mat-error>Експерт обов’язковий</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <textarea matInput formControlName="description" placeholder="Опис культурної цінності"></textarea>
-    </mat-form-field>
+  <div mat-dialog-content>
+    <div fxLayout="column">
+      <mat-form-field>
+        <input matInput formControlName="name" type="text" placeholder="Ім'я (для фіз. осіб) або найменування (для юр. осіб)">
+        <mat-error>Ім'я або найменування обов’язкове</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="address" type="text" placeholder="Адреса">
+        <mat-error>Адреса обов’язкова</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="phone" type="text" placeholder="Телефон">
+        <mat-error *ngIf="createRequestForm.get('phone').hasError('required')">Телефон обов’язковий</mat-error>
+        <mat-error *ngIf="createRequestForm.get('phone').hasError('pattern')">Дозволяються лише цифри та символ +</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="email" type="email" placeholder="Email">
+        <mat-error *ngIf="createRequestForm.get('email').hasError('required')">Email обов’язковий</mat-error>
+        <mat-error *ngIf="createRequestForm.get('email').hasError('email')">Введіть коректний email</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="passport" type="text" placeholder="Паспортні дані / номер ЄДРПУО">
+        <mat-error *ngIf="createRequestForm.get('passport').hasError('required')">Паспортні дані обов’язкові</mat-error>
+        <mat-error *ngIf="createRequestForm.get('passport').hasError('pattern')">Дозволяються лише цифри</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="region" placeholder="Область перебування цінності">
+          <mat-option *ngFor="let region of regions | async" [value]="region.id">{{ region.title }}</mat-option>
+        </mat-select>
+        <mat-error>Область обов’язкова</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="category" placeholder="Категорія цінності">
+          <mat-option *ngFor="let category of categories | async" [value]="category.id">{{ category.title }}</mat-option>
+        </mat-select>
+        <mat-error>Категорія обов’язкова</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="expert" placeholder="Експерт">
+          <mat-option *ngFor="let expert of experts | async" [value]="expert.id">{{ expert.title }}</mat-option>
+        </mat-select>
+        <mat-hint *ngIf="createRequestForm.get('region').invalid || createRequestForm.get('category').invalid">
+          Спочатку оберіть область і категорію
+        </mat-hint>
+        <mat-error>Експерт обов’язковий</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput formControlName="description" placeholder="Опис культурної цінності"></textarea>
+      </mat-form-field>
+      <div fxLayout="column">
+        <input type="file" multiple accept="image/*" hidden #imageFileInput (change)="getImages($event)" />
+        <button id="upload-imgs-btn" type="button" mat-stroked-button color="primary" (click)="imageFileInput.click()">
+          Додати зображення
+        </button>
+      </div>
+      <div id="images-block" *ngIf="images.length" fxLayout>
+        <div *ngFor="let image of images" [style.backgroundImage]="image.base64">
+          <button class="delete-btn" mat-icon-button color="warn" type="button" (click)="deleteImage(image.id)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div id="actions-row" mat-dialog-actions fxLayoutAlign="space-around">
+  <div class="dialog-actions-row" mat-dialog-actions fxLayoutAlign="space-around">
     <button mat-raised-button cdkFocusInitial color="primary" type="submit">Створити заяву</button>
-    <button mat-stroked-button mat-dialog-close>Відміна</button>
+    <button class="half-opacity-border" mat-stroked-button mat-dialog-close>Відміна</button>
   </div>
 </form>

@@ -1,3 +1,26 @@
-#actions-row {
-    padding-bottom: 20px;
+$primary: #3f51b5;
+
+#upload-imgs-btn {
+  border-color: $primary;
+}
+
+#images-block {
+  height: 200px;
+  padding: 15px 0;
+  overflow-x: auto;
+
+  div {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100%;
+    min-width: 150px;
+    margin: 0 10px;
+
+    .delete-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
 }

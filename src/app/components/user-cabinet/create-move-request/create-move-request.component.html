@@ -1,3 +1,119 @@
-<p>
-  create-move-request works!
-</p>
+<form [formGroup]="createRequestForm" (submit)="createRequest()">
+  <h1 class="text-center" mat-dialog-title>Створення заяви на отримання права вивезення культурної цінності</h1>
+  <div mat-dialog-content>
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="Інформація про заявника">
+        <div fxLayout="column" formGroupName="applicant_info">
+          <mat-form-field>
+            <input matInput formControlName="name" type="text" placeholder="Ім'я (для фіз. осіб) або найменування (для юр. осіб)">
+            <mat-error>Ім'я або найменування обов’язкове</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="address" type="text" placeholder="Адреса">
+            <mat-error>Адреса обов’язкова</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="phone" type="text" placeholder="Телефон">
+            <mat-error *ngIf="createRequestForm.controls.applicant_info.get('phone').hasError('required')">
+              Телефон обов’язковий
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.applicant_info.get('phone').hasError('pattern')">
+              Дозволяються лише цифри та символ +
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="email" type="email" placeholder="Email">
+            <mat-error *ngIf="createRequestForm.controls.applicant_info.get('email').hasError('required')">
+              Email обов’язковий
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.applicant_info.get('email').hasError('email')">
+              Введіть коректний email
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="passport" type="text" placeholder="Паспортні дані / номер ЄДРПУО">
+            <mat-error *ngIf="createRequestForm.controls.applicant_info.get('passport').hasError('required')">
+              Паспортні дані обов’язкові
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.applicant_info.get('passport').hasError('pattern')">
+              Дозволяються лише цифри
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-tab>
+      <mat-tab label="Інформація про власника">
+        <div fxLayout="column" formGroupName="owner_info">
+          <mat-form-field>
+            <input matInput formControlName="name" type="text" placeholder="Ім'я (для фіз. осіб) або найменування (для юр. осіб)">
+            <mat-error>Ім'я або найменування обов’язкове</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="address" type="text" placeholder="Адреса">
+            <mat-error>Адреса обов’язкова</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="phone" type="text" placeholder="Телефон">
+            <mat-error *ngIf="createRequestForm.controls.owner_info.get('phone').hasError('required')">
+              Телефон обов’язковий
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.owner_info.get('phone').hasError('pattern')">
+              Дозволяються лише цифри та символ +
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="email" type="email" placeholder="Email">
+            <mat-error *ngIf="createRequestForm.controls.owner_info.get('email').hasError('required')">
+              Email обов’язковий
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.owner_info.get('email').hasError('email')">
+              Введіть коректний email
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="passport" type="text" placeholder="Паспортні дані / номер ЄДРПУО">
+            <mat-error *ngIf="createRequestForm.controls.owner_info.get('passport').hasError('required')">
+              Паспортні дані обов’язкові
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.owner_info.get('passport').hasError('pattern')">
+              Дозволяються лише цифри
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-tab>
+      <!-- <mat-tab label="Інформація про вивезення">
+      <div fxLayout="column" formGroupName="move_info">
+        <mat-form-field>
+          <label>Тип вивезення: </label>
+          <mat-radio-group formControlName="type">
+            <mat-radio-button value="permanent">Постійне</mat-radio-button>
+            <mat-radio-button value="current">Тимчасове</mat-radio-button>
+          </mat-radio-group>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="address" type="text" placeholder="Адреса">
+          <mat-error>Адреса обов’язкова</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="phone" type="text" placeholder="Телефон">
+          <mat-error *ngIf="createRequestForm.get('phone').hasError('required')">Телефон обов’язковий</mat-error>
+          <mat-error *ngIf="createRequestForm.get('phone').hasError('pattern')">Дозволяються лише цифри та символ +</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="email" type="email" placeholder="Email">
+          <mat-error *ngIf="createRequestForm.get('email').hasError('required')">Email обов’язковий</mat-error>
+          <mat-error *ngIf="createRequestForm.get('email').hasError('email')">Введіть коректний email</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="passport" type="text" placeholder="Паспортні дані / номер ЄДРПУО">
+          <mat-error *ngIf="createRequestForm.get('passport').hasError('required')">Паспортні дані обов’язкові</mat-error>
+          <mat-error *ngIf="createRequestForm.get('passport').hasError('pattern')">Дозволяються лише цифри</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-tab> -->
+    </mat-tab-group>
+  </div>
+  <div class="dialog-actions-row" mat-dialog-actions fxLayoutAlign="space-around">
+    <button mat-raised-button cdkFocusInitial color="primary" type="submit">Створити заяву</button>
+    <button class="half-opacity-border" mat-stroked-button mat-dialog-close>Відміна</button>
+  </div>
+</form>

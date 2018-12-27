@@ -34,3 +34,11 @@ body {
 .hidden {
   visibility: hidden;
 }
+
+.half-opacity-border {
+  border-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.dialog-actions-row {
+  padding: 20px 0 !important;
+}
