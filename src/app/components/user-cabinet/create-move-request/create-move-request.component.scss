@@ -1,0 +1,16 @@
+label {
+  margin: 20px 0;
+}
+
+.control-with-label > label {
+  flex: 1 1 0;
+  min-width: 120px;
+}
+
+.control-with-label > mat-radio-group {
+  flex: 2 2 0;
+}
+
+.control-with-label > div {
+  flex: 2 2 0;
+}

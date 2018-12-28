@@ -12,7 +12,11 @@ export class UserService {
   constructor() { }
 
   public createRegularRequest(data: FormData) {
-    return of("success").pipe(delay(300));
+    return of(data).pipe(delay(300));
+  }
+
+  public createMoveRequest(data: any) {
+    return of(data).pipe(delay(300));
   }
 }
 

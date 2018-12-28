@@ -1,7 +1,7 @@
 <form [formGroup]="createRequestForm" (submit)="createRequest()">
   <h1 class="text-center" mat-dialog-title>Створення заяви на отримання права вивезення культурної цінності</h1>
   <div mat-dialog-content>
-    <mat-tab-group mat-stretch-tabs>
+    <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedIndex">
       <mat-tab label="Інформація про заявника">
         <div fxLayout="column" formGroupName="applicant_info">
           <mat-form-field>
@@ -80,36 +80,73 @@
           </mat-form-field>
         </div>
       </mat-tab>
-      <!-- <mat-tab label="Інформація про вивезення">
-      <div fxLayout="column" formGroupName="move_info">
-        <mat-form-field>
-          <label>Тип вивезення: </label>
-          <mat-radio-group formControlName="type">
-            <mat-radio-button value="permanent">Постійне</mat-radio-button>
-            <mat-radio-button value="current">Тимчасове</mat-radio-button>
-          </mat-radio-group>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput formControlName="address" type="text" placeholder="Адреса">
-          <mat-error>Адреса обов’язкова</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput formControlName="phone" type="text" placeholder="Телефон">
-          <mat-error *ngIf="createRequestForm.get('phone').hasError('required')">Телефон обов’язковий</mat-error>
-          <mat-error *ngIf="createRequestForm.get('phone').hasError('pattern')">Дозволяються лише цифри та символ +</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput formControlName="email" type="email" placeholder="Email">
-          <mat-error *ngIf="createRequestForm.get('email').hasError('required')">Email обов’язковий</mat-error>
-          <mat-error *ngIf="createRequestForm.get('email').hasError('email')">Введіть коректний email</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput formControlName="passport" type="text" placeholder="Паспортні дані / номер ЄДРПУО">
-          <mat-error *ngIf="createRequestForm.get('passport').hasError('required')">Паспортні дані обов’язкові</mat-error>
-          <mat-error *ngIf="createRequestForm.get('passport').hasError('pattern')">Дозволяються лише цифри</mat-error>
-        </mat-form-field>
-      </div>
-    </mat-tab> -->
+      <mat-tab label="Інформація про вивезення">
+        <div fxLayout="column" formGroupName="move_info">
+          <div class="control-with-label" fxLayout="row wrap" fxLayoutAlign=" center">
+            <label>Тип вивезення: </label>
+            <mat-radio-group formControlName="type" fxLayout="row wrap" (change)="handleTypeControlValueChange($event)">
+              <mat-radio-button value="permanent">Постійне</mat-radio-button>
+              <div style="width: 100px"></div>
+              <mat-radio-button value="current">Тимчасове</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="control-with-label" *ngIf="createRequestForm.controls.move_info.get('type').value === 'current'"
+            fxLayout="row wrap" fxLayoutAlign=" center">
+            <label>Проміжок часу тимчасового вивезення: </label>
+            <div fxLayout="row wrap">
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker1" formControlName="start_date" placeholder="Початкова дата"
+                  (dateChange)="validateDates()">
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-error *ngIf="createRequestForm.controls.move_info.get('start_date').hasError('required')">
+                  Початкова дата обов'язкова
+                </mat-error>
+                <mat-error *ngIf="createRequestForm.controls.move_info.get('start_date').hasError('tooBig')">
+                  Початкова дата повинна бути меншою за кінцеву
+                </mat-error>
+              </mat-form-field>
+              <div style="width: 50px"></div>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker2" formControlName="end_date" placeholder="Кінцева дата"
+                  (dateChange)="validateDates()">
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-error *ngIf="createRequestForm.controls.move_info.get('end_date').hasError('required')">
+                  Кінцева дата обов'язкова
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-form-field>
+            <input matInput formControlName="purpose" type="text" placeholder="Мета вивезення">
+            <mat-error *ngIf="createRequestForm.controls.move_info.get('purpose').hasError('required')">
+              Мета вивезення обов'язкова
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="country" type="text" placeholder="Країна вивезення">
+            <mat-error *ngIf="createRequestForm.controls.move_info.get('country').hasError('required')">
+              Країна вивезення обов'язкова
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="count" type="text" placeholder="Кількість цінностей, які будуть вивезені">
+            <mat-error *ngIf="createRequestForm.controls.move_info.get('count').hasError('required')">
+              Кількість цінностей обов'язкова
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.move_info.get('count').hasError('smallNumber')">
+              Кількість повинна бути більшою за нуль
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.move_info.get('count').hasError('floatNumber')">
+              Кількість повинна бути цілим числом
+            </mat-error>
+            <mat-error *ngIf="createRequestForm.controls.move_info.get('count').hasError('notNumber')">
+              Введіть число
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
   <div class="dialog-actions-row" mat-dialog-actions fxLayoutAlign="space-around">
